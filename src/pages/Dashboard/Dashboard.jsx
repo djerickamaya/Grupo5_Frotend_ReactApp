@@ -11,7 +11,8 @@ const Dashboard = () => {
         try {
             const data = await getBootcamps();
             console.log('Bootcamps data:', data);
-            setBootcamps(data);
+            const activeBootcamps = data.filter(bootcamp => bootcamp.active); // Filtrar solo los activos
+            setBootcamps(activeBootcamps);
         } catch (error) {
             console.error('Error fetching bootcamps', error);
             setError(error.message || 'Error en la solicitud');
@@ -36,8 +37,9 @@ const Dashboard = () => {
                 ...currentBootcamp,
                 technologies: currentBootcamp.technologies.split(',').map((tech) => tech.trim())
             });
-            setBootcamps([...bootcamps, createdBootcamp]);
+            setBootcamps((prevBootcamps) => [...prevBootcamps, createdBootcamp]); // Agregar el nuevo bootcamp a la lista
             setCurrentBootcamp({ id: null, name: '', description: '', technologies: '' });
+            fetchBootcamps(); // Refrescar los datos después de la creación
         } catch (error) {
             setError(error.message || 'Error creando bootcamp');
         }
@@ -45,10 +47,11 @@ const Dashboard = () => {
 
     const handleUpdateBootcamp = async () => {
         try {
-            await updateBootcamp(currentBootcamp.id, {
+            const updatedBootcamp = await updateBootcamp(currentBootcamp.id, {
                 name: currentBootcamp.name,
                 description: currentBootcamp.description,
-                technologies: currentBootcamp.technologies.split(',').map((tech) => tech.trim())
+                technologies: currentBootcamp.technologies.split(',').map((tech) => tech.trim()),
+                active: true // Asegurar que se mantiene activo
             });
             fetchBootcamps(); // Refrescar los datos después de la actualización
             setCurrentBootcamp({ id: null, name: '', description: '', technologies: '' });
@@ -62,14 +65,15 @@ const Dashboard = () => {
             id: bootcamp.id,
             name: bootcamp.name,
             description: bootcamp.description,
-            technologies: bootcamp.technologies.join(', ')
+            technologies: bootcamp.technologies.join(', '),
+            active: bootcamp.active // Asegurar que el estado activo se mantiene
         });
     };
 
     const handleDeleteBootcamp = async (id) => {
         try {
             await deleteBootcamp(id);
-            fetchBootcamps(); // Refrescar los datos después de la eliminación
+            setBootcamps((prevBootcamps) => prevBootcamps.filter((bootcamp) => bootcamp.id !== id)); // Eliminar el bootcamp de la lista
         } catch (error) {
             setError(error.message || 'Error eliminando bootcamp');
         }
@@ -114,6 +118,7 @@ const Dashboard = () => {
                         <th>Descripción</th>
                         <th>Tecnologías</th>
                         <th>Acciones</th>
+
                     </tr>
                 </thead>
                 <tbody>
