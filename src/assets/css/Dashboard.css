@@ -1,0 +1,76 @@
+/* Dashboard.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.create-bootcamp-form {
+    margin-bottom: 20px;
+}
+
+.create-bootcamp-form input,
+.create-bootcamp-form textarea {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: calc(100% - 22px);
+}
+
+.create-bootcamp-form button {
+    padding: 10px 20px;
+    background-color: #440404;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.create-bootcamp-form button:hover {
+    background-color: #333b02;
+}
+
+table.bootcamp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+table.bootcamp-table th,
+table.bootcamp-table td {
+    border: 2px solid #ffffff;
+    padding: 10px;
+}
+
+table.bootcamp-table th {
+    background-color: #440404;
+    color: #ffffff;
+}
+
+table.bootcamp-table td ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+table.bootcamp-table td ul li {
+    background: #333b02;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+table.bootcamp-table button {
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: #440404;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+table.bootcamp-table button:hover {
+    background-color: #333b02;
+}
